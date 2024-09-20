@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 BSD 3-Clause License
 
@@ -44,63 +44,63 @@ from mavros_apriltag_tracking.srv import PIDGains, PIDGainsResponse
 
 class FCUModes:
     def __init__(self):
-	    pass    
+        pass    
 
     def setArm(self):
         rospy.wait_for_service('mavros/cmd/arming')
         try:
             armService = rospy.ServiceProxy('mavros/cmd/arming', CommandBool)
             armService(True)
-        except rospy.ServiceException, e:
-            print "Service arming call failed: %s"%e
+        except rospy.ServiceException as e:
+            print("Service arming call failed: %s"%e)
 
     def setDisarm(self):
         rospy.wait_for_service('mavros/cmd/arming')
         try:
             armService = rospy.ServiceProxy('mavros/cmd/arming', CommandBool)
             armService(False)
-        except rospy.ServiceException, e:
-            print "Service disarming call failed: %s"%e
+        except rospy.ServiceException as e:
+            print("Service disarming call failed: %s" % str(e))
 
     def setStabilizedMode(self):
         rospy.wait_for_service('mavros/set_mode')
         try:
             flightModeService = rospy.ServiceProxy('mavros/set_mode', SetMode)
             flightModeService(custom_mode='STABILIZED')
-        except rospy.ServiceException, e:
-            print "service set_mode call failed: %s. Stabilized Mode could not be set."%e
+        except rospy.ServiceException as e:
+            print("service set_mode call failed: %s. Stabilized Mode could not be set." % e)
 
     def setOffboardMode(self):
         rospy.wait_for_service('mavros/set_mode')
         try:
             flightModeService = rospy.ServiceProxy('mavros/set_mode', SetMode)
             flightModeService(custom_mode='OFFBOARD')
-        except rospy.ServiceException, e:
-            print "service set_mode call failed: %s. Offboard Mode could not be set."%e
+        except rospy.ServiceException as e:
+            print("service set_mode call failed: %s. Offboard Mode could not be set." % e)
 
     def setAltitudeMode(self):
         rospy.wait_for_service('mavros/set_mode')
         try:
             flightModeService = rospy.ServiceProxy('mavros/set_mode', SetMode)
             flightModeService(custom_mode='ALTCTL')
-        except rospy.ServiceException, e:
-            print "service set_mode call failed: %s. Altitude Mode could not be set."%e
+        except rospy.ServiceException as e:
+            print("service set_mode call failed: %s. Altitude Mode could not be set."%e)
 
     def setPositionMode(self):
         rospy.wait_for_service('mavros/set_mode')
         try:
             flightModeService = rospy.ServiceProxy('mavros/set_mode', SetMode)
             flightModeService(custom_mode='POSCTL')
-        except rospy.ServiceException, e:
-            print "service set_mode call failed: %s. Position Mode could not be set."%e
+        except rospy.ServiceException as e:
+            print("service set_mode call failed: %s. Position Mode could not be set."%e)
 
     def setAutoLandMode(self):
         rospy.wait_for_service('mavros/set_mode')
         try:
             flightModeService = rospy.ServiceProxy('mavros/set_mode', SetMode)
             flightModeService(custom_mode='AUTO.LAND')
-        except rospy.ServiceException, e:
-            print "service set_mode call failed: %s. Autoland Mode could not be set."%e
+        except rospy.ServiceException as e:
+            print("service set_mode call failed: %s. Autoland Mode could not be set."%e)
 ##########################################################################################
 """
 This is a PI controller which takes target positions (ex_, ey_, ez_) in body directions (i.e. relative to body).
