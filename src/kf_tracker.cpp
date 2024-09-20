@@ -45,7 +45,7 @@ do_update_step_(true),
 measurement_off_time_(2.0),
 debug_(false)
 {
-   nh_private_.param<double>("dt_pred", dt_pred_, 0.05);
+   nh_private_.param<double>("dt_pred", dt_pred_, 0.15);
    nh_private_.param<double>("q_std", q_, 0.1);
    nh_private_.param<double>("r_std", r_, 0.01);
    int buff_size;
@@ -283,7 +283,10 @@ void KFTracker::poseCallback(const geometry_msgs::PoseStamped::ConstPtr& msg)
 
    if(!is_state_initialzed_)
    {
-      kf_state_pred_.x = z_meas_.z;
+      // kf_state_pred_.x = z_meas_.z;
+      kf_state_pred_.x(0,0)= z_meas_.z(0) ;
+      kf_state_pred_.x(1,0)= z_meas_.z(1) ;
+      kf_state_pred_.x(2,0)= z_meas_.z(2) ;
       is_state_initialzed_ = true;
       ROS_INFO("KF state estimate is initialized.");
    }
